@@ -1,8 +1,3 @@
-
-
-// The ForceGraph component will be the container for the generated force graph 
-// and ForceGraphGenerator will generate the graph using D3.
-
 import React from "react";
 import { runForceGraph } from "./forceGraphGenerator";
 import styles from "./forceGraph.module.css";

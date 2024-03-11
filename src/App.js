@@ -1,32 +1,33 @@
 import React from 'react';
 import './App.css';
+import data from './data/data.json';
+import { ForceGraph } from './components/forceGraph';
+
 
 function App() {
+
+  const nodeHoverTooltip = React.useCallback((node) => {
+    return `<div>${node.name}</div>`;
+  }, []);
+
+
   return (
     <div className="App">
-      <svg width="900" height = "500">
-      <circle
-        cx ="480"
-        cy ="300"
-        r="200"
-        fill ="yellow"
-      />
-      </svg>
-    <Circle  />
-    </div>
-  );
+    <header className="App-header">
+      Force Graph Example
+    </header>
+    <section className="Main">
+      <ForceGraph linksData={data.links} nodesData={data.nodes} nodeHoverTooltip={nodeHoverTooltip} />
+    </section>
+  </div>
+);
+
 }
 const Circle =() => (
   <div className="App">
-      <svg width="900" height = "500">
-      <circle
-        cx ="480"
-        cy ="300"
-        r="200"
-        fill ="yellow"
-      
-      />
-      </svg>
+       <section className="Main">
+        <ForceGraph linksData={data.links} nodesData={data.nodes} nodeHoverTooltip={nodeHoverTooltip} />
+      </section>
 
     </div>
 );
