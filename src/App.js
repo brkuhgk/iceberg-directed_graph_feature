@@ -13,9 +13,9 @@ function App() {
 
   return (
     <div className="App">
-    <header className="App-header">
+    {/* <header className="App-header">
       Force Graph Example
-    </header>
+    </header> */}
     <section className="Main">
       <ForceGraph linksData={data.links} nodesData={data.nodes} nodeHoverTooltip={nodeHoverTooltip} />
     </section>
@@ -23,14 +23,7 @@ function App() {
 );
 
 }
-const Circle =() => (
-  <div className="App">
-       <section className="Main">
-        <ForceGraph linksData={data.links} nodesData={data.nodes} nodeHoverTooltip={nodeHoverTooltip} />
-      </section>
 
-    </div>
-);
 
 
 export default App;

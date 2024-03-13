@@ -1,5 +1,5 @@
 import React from "react";
-import { runForceGraph } from "./forceGraphGenerator";
+import { runForceGraph } from "./forceGraphGenerator3";
 import styles from "./forceGraph.module.css";
 
 export function ForceGraph({ linksData, nodesData, nodeHoverTooltip }) {

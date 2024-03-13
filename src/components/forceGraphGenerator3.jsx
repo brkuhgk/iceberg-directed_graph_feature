@@ -1,34 +1,19 @@
 import * as d3 from "d3";
 
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import styles from "./forceGraph.module.css";
 
 export function runForceGraph(
   container,
   linksData,
   nodesData,
-  nodeHoverTooltip
+  
 ) {
-
-  console.log(linksData)
-
   const links = linksData.map((d) => Object.assign({}, d));
   const nodes = nodesData.map((d) => Object.assign({}, d));
-  console.log("#after");
-  console.log(links);
+
   const containerRect = container.getBoundingClientRect();
-  const height = containerRect.height; 
+  const height = containerRect.height;
   const width = containerRect.width;
-
-  const color = () => { return "#9D79A0"; };
-
-  const icon = (d) => {
-    return d.gender === "male" ? "\uf222" : "\uf221";
-  }
-
-  const getClass = (d) => {
-    return d.gender === "male" ? styles.male : styles.female;
-  };
+  
 
   const drag = (simulation) => {
     const dragstarted = (event, d) => {
@@ -55,34 +40,6 @@ export function runForceGraph(
       .on("end", dragended);
   };
 
-  // Add the tooltip element to the graph
-  const tooltip = document.querySelector("#graph-tooltip");
-  if (!tooltip) {
-    const tooltipDiv = document.createElement("div");
-    tooltipDiv.classList.add(styles.tooltip);
-    tooltipDiv.style.opacity = "0";
-    tooltipDiv.id = "graph-tooltip";
-    document.body.appendChild(tooltipDiv);
-  }
-  const div = d3.select("#graph-tooltip");
-
-  const addTooltip = (hoverTooltip, d, x, y) => {
-    div
-      .transition()
-      .duration(200)
-      .style("opacity", 0.9);
-    div
-      .html(hoverTooltip(d))
-      .style("left", `${x}px`)
-      .style("top", `${y - 28}px`);
-  };
-
-  const removeTooltip = () => {
-    div
-      .transition()
-      .duration(200)
-      .style("opacity", 0);
-  };
 
   const simulation = d3
     .forceSimulation(nodes)
@@ -115,28 +72,9 @@ export function runForceGraph(
     .selectAll("circle")
     .data(nodes)
     .join("circle")
-    .attr("r", 12)
-    .attr("fill", color)
+    .attr("r", 6)
+    .attr("fill", "black")
     .call(drag(simulation));
-
-  const label = svg.append("g")
-    .attr("class", "labels")
-    .selectAll("text")
-    .data(nodes)
-    .enter()
-    .append("text")
-    .attr('text-anchor', 'middle')
-    .attr('dominant-baseline', 'central')
-    .attr("class", d => `fa ${getClass(d)}`)
-    .text(d => {return icon(d);})
-    .call(drag(simulation));
-
-  label.on("mouseover", (event,  d) => {
-    addTooltip(nodeHoverTooltip, d, event.pageX, event.pageY);
-  })
-    .on("mouseout", () => {
-      removeTooltip();
-    });
 
   simulation.on("tick", () => {
     //update link positions
@@ -150,11 +88,6 @@ export function runForceGraph(
     node
       .attr("cx", d => d.x)
       .attr("cy", d => d.y);
-
-    // update label positions
-    label
-      .attr("x", d => { return d.x; })
-      .attr("y", d => { return d.y; })
   });
 
   return {
@@ -166,4 +99,3 @@ export function runForceGraph(
     }
   };
 }
-
